@@ -1,2 +1,2 @@
-# erlang_Contracts
+# Erlang_Contracts
 as per simon peyton
