@@ -1,0 +1,19 @@
+{application, instruments, [
+    {description, "Financial Derivatives DSL - Composable option pricing and contract evaluation"},
+    {vsn, "0.1.0"},
+    {registered, [instrument_sup]},
+    {applications, [
+        kernel,
+        stdlib
+    ]},
+    {modules, [
+        barrier_logic,
+        instruments,
+        instrument_custom,
+        instrument_server,
+        instrument_sup,
+        main
+    ]},
+    {mod, {instrument_sup, []}},
+    {env, []}
+]}.

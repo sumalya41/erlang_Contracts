@@ -95,10 +95,10 @@ value_contract({observe, {terminal, Asset}}, Env) ->
 value_contract({observe, {multi, Assets}}, Env) ->
     [maps:get({A, terminal}, Env, 0) || A <- Assets];
 
-value_contract({observe, {path_max, Asset}}, Env) ->
+value_contract({observe, {path_max, _Asset}}, Env) ->
     lists:max(maps:get(path, Env, []));
 
-value_contract({observe, {path_min, Asset}}, Env) ->
+value_contract({observe, {path_min, _Asset}}, Env) ->
     lists:min(maps:get(path, Env, []));
 
 %% -------- Transformation --------
