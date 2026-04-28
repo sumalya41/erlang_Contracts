@@ -1,5 +1,19 @@
 -module(instruments).
--export([value/1, risk/1, new_stock/2, new_bond/3]).
+ -module(instruments).
+ -export([
+     stock/1,
+     bond/2,
+     rate/1,
+     terminal/1,
+     path/1,
+     constant/1,
+     binary/2,
+     diff/2,
+     max_of/1,
+     min_of/1,
+     add/2,
+     choice/2
+ ]).
 
 %% Constructors to create our "Objects"
 new_stock(Symbol, Price) ->

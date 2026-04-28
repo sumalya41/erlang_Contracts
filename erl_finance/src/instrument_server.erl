@@ -45,7 +45,7 @@ eval(#{type := base_instrument, data := Data}, _) ->
 eval(#{type := derivative, data := Data, children := [Underlying]}, Env) ->
     UnderVal = gen_server:call(Underlying, {value, Env}),
     Strike = maps:get(strike, Data, 0),
-    max(UnderVal - Strike, 0);
+    erlang:max(UnderVal - Strike, 0);
 
 eval(#{type := bond, data := Data}, _) ->
     Notional = maps:get(notional, Data, 0),
