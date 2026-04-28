@@ -7,7 +7,6 @@
 
 %% API calls
 
-
 start_link(State) ->
     gen_server:start_link(?MODULE, State, []).
 
@@ -95,11 +94,17 @@ value_contract({observe, {terminal, Asset}}, Env) ->
 value_contract({observe, {multi, Assets}}, Env) ->
     [maps:get({A, terminal}, Env, 0) || A <- Assets];
 
-value_contract({observe, {path_max, Asset}}, Env) ->
-    lists:max(maps:get(path, Env, []));
+value_contract({observe, {path, _Asset}}, Env) ->
+    maps:get(path, Env, []);
 
-value_contract({observe, {path_min, Asset}}, Env) ->
-    lists:min(maps:get(path, Env, []));
+value_contract({observe, {rate, Name}}, Env) ->
+    maps:get({rate, Name}, Env, 0);
+
+value_contract({observe, {path_max, _Asset}}, Env) ->
+    lists:max(maps:get(path, Env, [0]));
+
+value_contract({observe, {path_min, _Asset}}, Env) ->
+    lists:min(maps:get(path, Env, [0]));
 
 %% -------- Transformation --------
 
@@ -111,7 +116,7 @@ value_contract({transform, {binary, K}, C}, Env) ->
 
 value_contract({transform, diff, C}, Env) ->
     [A, B] = value_contract(C, Env),
-    max(A - B, 0);
+    erlang:max(A - B, 0);
 
 value_contract({transform, max_of, C}, Env) ->
     lists:max(value_contract(C, Env));
@@ -136,7 +141,7 @@ value_contract({'when', {'after', T}, C}, Env) ->
 %% -------- Composition --------
 
 value_contract({choice, C1, C2}, Env) ->
-    max(value_contract(C1, Env), value_contract(C2, Env));
+    erlang:max(value_contract(C1, Env), value_contract(C2, Env));
 
 value_contract({combine, add, C1, C2}, Env) ->
     value_contract(C1, Env) + value_contract(C2, Env);

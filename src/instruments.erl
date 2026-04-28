@@ -1,20 +1,26 @@
 -module(instruments).
--export([value/1, risk/1, new_stock/2, new_bond/3,
-        %% DSL helpers
-    terminal/1,
-    path/1,
-    constant/1,
+ -module(instruments).
+ -export([
+     %% basic references
+     stock/1,
+     bond/2,
+     rate/1,
 
-    %% transformations
-    binary/2,
-    diff/2,
-    max_of/1,
-    min_of/1,
+     %% DSL helpers
+     terminal/1,
+     path/1,
+     constant/1,
 
-    %% composition helpers
-    add/2,
-    choice/2
-            ]).  
+     %% transformations
+     binary/2,
+     diff/2,
+     max_of/1,
+     min_of/1,
+
+     %% composition helpers
+     add/2,
+     choice/2
+ ]).
 
 %% =========================
 %% BASIC INSTRUMENT REFERENCES
