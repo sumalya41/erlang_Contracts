@@ -1,5 +1,5 @@
 -module(instruments).
- -module(instruments).
+
  -export([
      %% basic references
      stock/1,
