@@ -92,7 +92,7 @@ barrier(Type, Level, Contract) ->
     start_instrument(#{contract => C}).
 
 %% =========================
-%% 🔥 SWAP CONTRACTS (NEW)
+%%  SWAP CONTRACTS (NEW)
 %% =========================
 
 %% -------------------------
@@ -144,7 +144,7 @@ vol_swap(Asset, FixedVol) ->
     start_instrument(#{contract => C}).
 
 %% -------------------------
-%% Bilateral Swap (Generic)
+%% Bilateral Swap (Generic) 
 %% -------------------------
 bilateral_swap(C1, C2, OTC) ->
     C =

@@ -4,14 +4,15 @@
 *.plt
 erl_crash.dump
 .concrete/DEV_MODE
+ebin/
 
 # rebar 2.x
 .rebar
 rel/example_project
-ebin/*.beam
 deps
 
 # rebar 3
 .rebar3
 _build/
 _checkouts/
+CLAUDE.md
