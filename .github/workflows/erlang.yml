@@ -1,0 +1,57 @@
+name: Erlang CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        otp: ['26', '27', '28']
+        rebar3: ['3.23']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Erlang/OTP and Rebar3
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ matrix.otp }}
+          rebar3-version: ${{ matrix.rebar3 }}
+
+      - name: Cache Rebar3 dependencies and build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/rebar3
+            _build
+          key: ${{ runner.os }}-rebar3-${{ matrix.otp }}-${{ hashFiles('rebar.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-rebar3-${{ matrix.otp }}-
+
+      - name: Fetch dependencies
+        run: rebar3 get_deps
+
+      - name: Compile project
+        run: rebar3 compile
+
+      - name: Run Tests (EUnit and Common Test)
+        run: rebar3 do eunit, ct
+
+      - name: Run Dialyzer (Static Analysis)
+        run: rebar3 dialyzer
+
+      - name: Run Xref (Cross-reference checker)
+        run: rebar3 xref
+
+      - name: Trigger Jenkins Job
+        if: success()
+        run: |
+          echo "✅ Tests passed! Triggering Jenkins..."
+          curl -X POST "${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/build?token=${{ secrets.JENKINS_TOKEN }}" \
+            -u "${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_API_TOKEN }}"
