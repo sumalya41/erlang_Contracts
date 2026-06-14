@@ -1,0 +1,14 @@
+{application, erl_finance,
+ [{description, "Erlang Finance Trading Engine with DSL Parser"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {erl_finance_app, []}},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+  {licenses, []},
+  {links, []}
+ ]}.
