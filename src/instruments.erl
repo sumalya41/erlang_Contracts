@@ -1,6 +1,6 @@
 -module(instruments).
--export([value/1, risk/1, new_stock/2, new_bond/3,
-        %% DSL helpers
+-export([
+    %% DSL helpers
     terminal/1,
     path/1,
     constant/1,
@@ -14,23 +14,7 @@
     %% composition helpers
     add/2,
     choice/2
-            ]).  
-
-%% =========================
-%% BASIC INSTRUMENT REFERENCES
-%% =========================
-
-%% NOTE: these are NOT objects anymore
-%% they are identifiers used in DSL
-
-stock(Symbol) ->
-    Symbol.
-
-bond(Name, _Type) ->
-    Name.
-
-rate(Name) ->
-    {rate, Name}.
+]).  
 
 %% =========================
 %% OBSERVATION HELPERS
